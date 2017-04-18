@@ -35,5 +35,3 @@ let _ = out.save(outputPath).unwrap();
 ```rust
 let out_buf = read_from_file("test.png".to_string());
 ```
-
-It currently supports modifying the alpha channel of images
