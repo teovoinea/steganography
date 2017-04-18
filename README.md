@@ -1,6 +1,8 @@
 # steganography
 A simple steganography library written in rust
 
+[Crates.io](https://crates.io/crates/steganography)
+
 ## Usage
 
 Add the following to the Cargo.toml in your project:
