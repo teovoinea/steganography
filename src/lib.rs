@@ -12,21 +12,27 @@ use image::{
 
 #[test]
 fn it_works() {
-	let img = image::open(&Path::new("test.jpg")).unwrap();
-
 	let buffer = [0x00_u8];
-	let out = write_to_image(&buffer, img);
+
+	let out = write_to_file(&buffer, "test.jpg".to_string());
 
     let ref mut pout = &Path::new("test.png");
-
     // Write the contents of this image to the Writer in PNG format.
     let _ = out.save(pout).unwrap();
 
-	let in_image = image::open(&Path::new("test.png")).unwrap().to_rgba();
-	
-	let out_buf = read_from_image(in_image);
+	let out_buf = read_from_file("test.png".to_string());
 
 	assert_eq!(0 as u8, *out_buf.get(0).unwrap());
+}
+
+pub fn write_to_file(input: &[u8], filename: String) -> ImageBuffer<Rgba<u8>, Vec<u8>> {
+	let img = image::open(&Path::new(&filename)).unwrap();
+	return write_to_image(input, img);
+}
+
+pub fn read_from_file(filename: String) -> Vec<u8> {
+	let img = image::open(&Path::new(&filename)).unwrap().to_rgba();
+	return read_from_image(img);	
 }
 
 pub fn write_to_image(input: &[u8], img: DynamicImage) -> ImageBuffer<Rgba<u8>, Vec<u8>> {
