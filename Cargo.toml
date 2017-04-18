@@ -2,6 +2,12 @@
 name = "steganography"
 version = "0.1.0"
 authors = ["Teo Voinea <voinea.teodor@gmail.com>"]
+description = "A simple steganography library"
+respository = "https://github.com/teovoinea/steganography"
+readme = "README.md"
+keywords = ["image", "steganography"]
+categories = ["encoding"]
+license = "MIT"
 
 [dependencies]
 image = "*"
