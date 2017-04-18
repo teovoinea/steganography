@@ -1,0 +1,7 @@
+[package]
+name = "steganography"
+version = "0.1.0"
+authors = ["Teo Voinea <voinea.teodor@gmail.com>"]
+
+[dependencies]
+image = "*"
