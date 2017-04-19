@@ -49,7 +49,7 @@ pub fn write_to_image(input: &[u8], img: DynamicImage) -> ImageBuffer<Rgba<u8>, 
 		let mut tmp_pixel = pixel;
 		
 		if x+y < input.len() as u32{
-			tmp_pixel.data[3] = input[(x+y) as usize];
+			tmp_pixel.data[3] = input[(x + (y*width)) as usize];
 		}
 
 		out.put_pixel(x, y, tmp_pixel);
