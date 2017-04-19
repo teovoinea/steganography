@@ -37,3 +37,9 @@ let _ = out.save(outputPath).unwrap();
 ```rust
 let out_buf = read_from_file("test.png".to_string());
 ```
+
+## Testing
+
+```bash
+RUST_TEST_THREADS=1 cargo test
+```
