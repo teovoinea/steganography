@@ -11,7 +11,7 @@ use image::{
 
 
 #[test]
-fn it_works() {
+fn test_file_read_write() {
 	let buffer = [0x00_u8];
 
 	let out = write_to_file(&buffer, "test.jpg".to_string());
@@ -23,6 +23,21 @@ fn it_works() {
 	let out_buf = read_from_file("test.png".to_string());
 
 	assert_eq!(0 as u8, *out_buf.get(0).unwrap());
+}
+
+#[test]
+fn test_string_read_write() {
+	let message = "test".to_string();
+	
+	let out = message_to_file(message, "test.jpg".to_string());
+		
+    let ref mut pout = &Path::new("test.png");
+    // Write the contents of this image to the Writer in PNG format.
+    let _ = out.save(pout).unwrap();
+
+	let out_buf = message_from_file("test.png".to_string(), 4 as usize);
+
+	assert_eq!("test".to_string(), out_buf);
 }
 
 pub fn write_to_file(input: &[u8], filename: String) -> ImageBuffer<Rgba<u8>, Vec<u8>> {
@@ -48,8 +63,10 @@ pub fn write_to_image(input: &[u8], img: DynamicImage) -> ImageBuffer<Rgba<u8>, 
 	for (x, y, pixel) in img.pixels() {
 		let mut tmp_pixel = pixel;
 		
-		if x+y < input.len() as u32{
-			tmp_pixel.data[3] = input[(x + (y*width)) as usize];
+		let inputIndex = x + (y * width);
+		
+		if inputIndex < input.len() as u32{
+			tmp_pixel.data[3] = input[inputIndex as usize];
 		}
 
 		out.put_pixel(x, y, tmp_pixel);
@@ -66,4 +83,24 @@ pub fn read_from_image(img: ImageBuffer<Rgba<u8>, Vec<u8>>) -> Vec<u8> {
 	}
 
 	return out;
+}
+
+pub fn message_to_image(src: String, img: DynamicImage) -> ImageBuffer<Rgba<u8>, Vec<u8>> {
+	return write_to_image(src.as_bytes(), img);
+}
+
+pub fn message_to_file(src: String, filename: String) -> ImageBuffer<Rgba<u8>, Vec<u8>> {
+	let img = image::open(&Path::new(&filename)).unwrap();
+	return message_to_image(src, img);
+}
+
+pub fn message_from_image(img: ImageBuffer<Rgba<u8>, Vec<u8>>, len: usize) -> String {
+	let mut out = read_from_image(img);
+	out.truncate(len);
+	return String::from_utf8_lossy(&out).into_owned();	
+}
+
+pub fn message_from_file(filename: String, len: usize) -> String {
+	let img = image::open(&Path::new(&filename)).unwrap().to_rgba();
+	return message_from_image(img, len);
 }
