@@ -2,6 +2,9 @@ extern crate image;
 
 use std::path::Path;
 
+use std::io::prelude::*;
+use std::fs::File;
+
 use image::{
 	GenericImage,
 	DynamicImage,
@@ -11,7 +14,7 @@ use image::{
 
 
 #[test]
-fn test_file_read_write() {
+fn test_buffer_read_write() {
 	let buffer = [0x00_u8];
 
 	let out = write_to_file(&buffer, "test.jpg".to_string());
@@ -38,6 +41,18 @@ fn test_string_read_write() {
 	let out_buf = message_from_file("test.png".to_string(), 4 as usize);
 
 	assert_eq!("test".to_string(), out_buf);
+}
+
+#[test]
+fn test_file_read_write() {
+	let out = file_to_file("test.txt".to_string(), "test.jpg".to_string());
+	
+    let ref mut pout = &Path::new("test.png");
+    // Write the contents of this image to the Writer in PNG format.
+    let _ = out.save(pout).unwrap();
+	
+	let out_buf = message_from_file("test.png".to_string(), 14 as usize);
+	assert_eq!("this is a test".to_string(), out_buf);
 }
 
 pub fn write_to_file(input: &[u8], filename: String) -> ImageBuffer<Rgba<u8>, Vec<u8>> {
@@ -104,3 +119,26 @@ pub fn message_from_file(filename: String, len: usize) -> String {
 	let img = image::open(&Path::new(&filename)).unwrap().to_rgba();
 	return message_from_image(img, len);
 }
+
+pub fn file_to_image(src: String, img: DynamicImage) -> ImageBuffer<Rgba<u8>, Vec<u8>> {
+	let mut f = File::open(src).expect("Could not open file");
+	let mut buffer = Vec::new();
+	f.read_to_end(&mut buffer).expect("Could not read file");
+	return write_to_image(buffer.as_slice(), img);
+}
+
+pub fn file_to_file(src: String, filename: String) -> ImageBuffer<Rgba<u8>, Vec<u8>> {
+	let mut f = File::open(src).expect("Could not open file");
+	let mut buffer = Vec::new();
+	f.read_to_end(&mut buffer).expect("Could not read file");
+	return write_to_file(buffer.as_slice(), filename);
+}
+
+/*
+pub fn file_from_image() {
+
+}
+
+pub fn file_from_file() {
+
+}*/
