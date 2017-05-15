@@ -1,18 +1,3 @@
-extern crate image;
-
-use std::path::Path;
-
-use std::io::prelude::*;
-use std::fs::File;
-
-use image::{
-	GenericImage,
-	DynamicImage,
-	ImageBuffer,
-	Rgba
-};
-
-
 #[test]
 fn test_buffer_read_write() {
 	let buffer = [0x00_u8];
