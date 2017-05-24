@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/teovoinea/steganography.svg?branch=builder)](https://travis-ci.org/teovoinea/steganography)
+[![Build Status](https://travis-ci.org/teovoinea/steganography.svg?branch=master)](https://travis-ci.org/teovoinea/steganography)
 # steganography
 A simple steganography library written in rust
 
