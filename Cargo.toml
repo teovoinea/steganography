@@ -10,4 +10,4 @@ categories = ["encoding"]
 license = "MIT"
 
 [dependencies]
-image = "0.12.3"
+image = "0.13.0"
