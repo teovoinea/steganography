@@ -1,9 +1,13 @@
 extern crate image;
+extern crate rayon;
 
 use std::path::Path;
 
-use std::io::prelude::*;
+use std::fs;
 use std::fs::File;
+use std::fs::Metadata;
+use rayon::prelude::*;
+use std::io::prelude::*;
 
 use image::{
 	GenericImage,
@@ -53,6 +57,20 @@ fn test_file_read_write() {
 	
 	let out_buf = message_from_file("test.png".to_string(), 14 as usize);
 	assert_eq!("this is a test".to_string(), out_buf);
+}
+
+#[test]
+fn test_will_fit() {
+	let test = fs::metadata("test.txt").unwrap();
+	let readme = fs::metadata("README.md").unwrap();
+	let mut files = Vec::new();
+	let mut images = Vec::new();
+
+	files.push(&test);
+	files.push(&readme);
+	let image = Path::new("test.png");
+	images.push(image);
+	assert_eq!(true, will_fit(files, images));
 }
 
 pub fn write_to_file(input: &[u8], filename: String) -> ImageBuffer<Rgba<u8>, Vec<u8>> {
@@ -132,6 +150,21 @@ pub fn file_to_file(src: String, filename: String) -> ImageBuffer<Rgba<u8>, Vec<
 	let mut buffer = Vec::new();
 	f.read_to_end(&mut buffer).expect("Could not read file");
 	return write_to_file(buffer.as_slice(), filename);
+}
+
+pub fn will_fit(files: Vec<&Metadata>, images: Vec<&Path>) -> bool {
+	let file_size: u64 = files.par_iter()
+								.map(|&f| f.len())
+								.sum();
+	let image_space: u32 = images.par_iter()
+									.map(|&p|{
+										let img = image::open(p).unwrap();
+										img.width() * img.height()
+									})
+									.sum();
+
+	println!("File size: {:?} Image size: {:?}", file_size, image_space);
+	image_space as u64 >= file_size
 }
 
 /*
