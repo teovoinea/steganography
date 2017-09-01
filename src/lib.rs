@@ -70,7 +70,7 @@ fn test_will_fit() {
 	files.push(&readme);
 	let image = Path::new("test.png");
 	images.push(image);
-	assert_eq!(true, will_fit(files, images));
+	assert_eq!(true, will_fit(files.as_slice(), images.as_slice()));
 }
 
 pub fn write_to_file(input: &[u8], filename: String) -> ImageBuffer<Rgba<u8>, Vec<u8>> {
@@ -152,7 +152,7 @@ pub fn file_to_file(src: String, filename: String) -> ImageBuffer<Rgba<u8>, Vec<
 	return write_to_file(buffer.as_slice(), filename);
 }
 
-pub fn will_fit(files: Vec<&Metadata>, images: Vec<&Path>) -> bool {
+pub fn will_fit(files: &[&Metadata], images: &[&Path]) -> bool {
 	let file_size: u64 = files.par_iter()
 								.map(|&f| f.len())
 								.sum();
@@ -165,6 +165,38 @@ pub fn will_fit(files: Vec<&Metadata>, images: Vec<&Path>) -> bool {
 
 	println!("File size: {:?} Image size: {:?}", file_size, image_space);
 	image_space as u64 >= file_size
+}
+
+pub fn multiple_files_to_multiple_images(files: &mut[&File], images: &[&Path]) -> Option<Vec<ImageBuffer<Rgba<u8>, Vec<u8>>>> {
+
+	let files_meta: Vec<Metadata> = files.iter()
+							.map(|f| f.metadata().unwrap())
+							.collect();
+
+	let cloned: Vec<&Metadata> = files_meta.iter().map(|f| f).collect();
+
+	if will_fit(cloned.as_slice(), images) {
+		let mut buffer_position = 0 as usize;
+		let mut buffer = Vec::new();
+		let mut image_buffers = Vec::new();
+		for mut file in files {
+			file.read_to_end(&mut buffer).expect("Could not read file");
+		}
+		for img in images {
+			let img = image::open(img).unwrap();
+			let mut take_from_buffer = (img.width() * img.height()) as usize;
+			if take_from_buffer + buffer_position > buffer.len(){
+				take_from_buffer = buffer.len() - buffer_position;
+			}
+			image_buffers.push(
+				write_to_image(&buffer[buffer_position..take_from_buffer], img)
+			);
+		}
+		return Some(image_buffers);
+	}
+	else {
+		return None;
+	}
 }
 
 /*
