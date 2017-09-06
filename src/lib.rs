@@ -40,6 +40,13 @@ fn test_file_read_write() {
 	assert_eq!("this is a test".to_string(), out_buf);
 }
 
+extern crate image;
+
+pub mod Encoder;
+pub mod Decoder;
+pub mod Util;
+
+/*
 pub fn write_to_file(input: &[u8], filename: String) -> ImageBuffer<Rgba<u8>, Vec<u8>> {
 	let img = image::open(&Path::new(&filename)).unwrap();
 	return write_to_image(input, img);
@@ -118,12 +125,4 @@ pub fn file_to_file(src: String, filename: String) -> ImageBuffer<Rgba<u8>, Vec<
 	f.read_to_end(&mut buffer).expect("Could not read file");
 	return write_to_file(buffer.as_slice(), filename);
 }
-
-/*
-pub fn file_from_image() {
-
-}
-
-pub fn file_from_file() {
-
-}*/
+*/
