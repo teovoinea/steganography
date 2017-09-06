@@ -1,6 +1,6 @@
 [package]
 name = "steganography"
-version = "0.2.2"
+version = "0.2.3"
 authors = ["Teo Voinea <voinea.teodor@gmail.com>"]
 description = "A simple steganography library"
 repository = "https://github.com/teovoinea/steganography"
