@@ -1,3 +1,9 @@
+extern crate image;
+
+pub mod encoder;
+pub mod decoder;
+pub mod util;
+
 #[test]
 fn test_buffer_read_write() {
 	let buffer = [0x00_u8];
@@ -40,11 +46,7 @@ fn test_file_read_write() {
 	assert_eq!("this is a test".to_string(), out_buf);
 }
 
-extern crate image;
 
-pub mod Encoder;
-pub mod Decoder;
-pub mod Util;
 
 /*
 pub fn write_to_file(input: &[u8], filename: String) -> ImageBuffer<Rgba<u8>, Vec<u8>> {

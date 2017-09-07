@@ -1,15 +1,16 @@
 use image::{
 	ImageBuffer,
+	GenericImage,
 	DynamicImage,
 	Rgba
 };
 	
-pub struct Encoder {
+pub struct Encoder<'a> {
 	img: DynamicImage,
-	input: &[u8]
+	input: &'a [u8]
 }
 
-impl Encoder {
+impl<'a> Encoder<'a> {
 	
 	pub fn new(input: &[u8], img: DynamicImage) -> Encoder {
 		Encoder{
@@ -31,10 +32,10 @@ impl Encoder {
 		for (x, y, pixel) in self.img.pixels() {
 			let mut tmp_pixel = pixel;
 			
-			let inputIndex = x + (y * width);
+			let input_index = x + (y * width);
 			
-			if inputIndex < self.input.len() as u32{
-				tmp_pixel.data[3] = self.input[inputIndex as usize];
+			if input_index < self.input.len() as u32{
+				tmp_pixel.data[3] = self.input[input_index as usize];
 			}
 
 			out.put_pixel(x, y, tmp_pixel);
