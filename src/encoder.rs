@@ -45,7 +45,7 @@ impl<'a> Encoder<'a> {
 		return out;
 	}
 
-	// Encodes the buffer into its own image using RGBA channels
+	/// Encodes the buffer into its own image using RGBA channels
 	pub fn encode_image(&self) -> ImageBuffer<Rgba<u8>, Vec<u8>> {
 		//4 bytes per pixel
 		let mut pixels = self.input.len() / 4;
