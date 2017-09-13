@@ -5,6 +5,7 @@ use steganography::encoder::*;
 use steganography::decoder::*;
 use std::path::Path;
 
+/// Tests encoding and decoding alpha. Check if they read/write the same buffer.
 #[test]
 fn test_encode_decode_alpha() {
     let buffer = [0x00_u8];
@@ -23,6 +24,7 @@ fn test_encode_decode_alpha() {
     assert!(dec_vec[0] == buffer[0]);
 }
 
+/// Tests encoding and decoding an image. Check if they read/write the same buffer.
 #[test]
 fn test_encode_decode_image() {
     

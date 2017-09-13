@@ -11,7 +11,7 @@ pub struct Encoder<'a> {
 }
 
 impl<'a> Encoder<'a> {
-	
+	/// Creates a new encoder with a buffer to write and an image to write it to
 	pub fn new(input: &[u8], img: DynamicImage) -> Encoder {
 		Encoder{
 			img,
@@ -19,6 +19,7 @@ impl<'a> Encoder<'a> {
 		}
 	}
 
+	/// Encodes the buffer into the alpha channel of the destination image
 	pub fn encode_alpha(&self) -> ImageBuffer<Rgba<u8>, Vec<u8>> {
 		let (width, height) = self.img.dimensions();
 		let bytes = width * height;
@@ -44,6 +45,7 @@ impl<'a> Encoder<'a> {
 		return out;
 	}
 
+	// Encodes the buffer into its own image using RGBA channels
 	pub fn encode_image(&self) -> ImageBuffer<Rgba<u8>, Vec<u8>> {
 		//4 bytes per pixel
 		let mut pixels = self.input.len() / 4;

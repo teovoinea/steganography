@@ -16,6 +16,7 @@ pub fn files_to_bytes(files: &mut [&File]) -> Vec<u8> {
     let mut buffer = Vec::new();
     for file in files {
         file.read_to_end(&mut buffer).expect("Could not read file");
+        // Add a unique code to identify the end of one file and the beginning of the next
     }
     buffer
 }
@@ -35,10 +36,10 @@ pub fn bytes_to_files(bytes: &[u8]) -> &[&File] {
 }
 
 pub fn file_as_dynamic_image(string: String) -> DynamicImage {
-
+    //TODO
 }
 
 pub fn save_image_buffer(img: ImageBuffer) -> File {
-    
+    //TODO
 }
 */

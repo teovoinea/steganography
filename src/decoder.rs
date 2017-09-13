@@ -8,13 +8,14 @@ pub struct Decoder {
 }
 
 impl Decoder {
-
+	/// Creates a new decoder with an image to read from
 	pub fn new(img: ImageBuffer<Rgba<u8>, Vec<u8>>) -> Decoder {
 		Decoder {
 			img
 		}
 	}
 
+	/// Decodes the image by reading the alpha channel of each pixel
 	pub fn decode_alpha(&self) -> Vec<u8> {
 		let mut out: Vec<u8> = Vec::new();
 
