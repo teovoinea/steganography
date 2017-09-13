@@ -43,4 +43,42 @@ impl<'a> Encoder<'a> {
 
 		return out;
 	}
+
+	pub fn encode_image(&self) -> ImageBuffer<Rgba<u8>, Vec<u8>> {
+		//4 bytes per pixel
+		let mut pixels = self.input.len() / 4;
+		let padding = 4 - (self.input.len() % 4);
+		pixels = pixels + padding;
+
+		//make it as close to a square as possible
+		let width = (pixels as f64).sqrt().floor() as u32;
+		let height = (pixels as f64 / width as f64).ceil() as u32;
+
+		//create all the pixels
+		let mut out = ImageBuffer::new(width, height);
+		let mut out_pixels: Vec<(u32, u32, Rgba<u8>)> = Vec::new();
+		for (x, y, pixel) in out.enumerate_pixels() {
+			let tmp_pixel: &Rgba<u8> = pixel;
+			let mut out_pixel = tmp_pixel.clone();
+			let input_index = (x + (y * width)) * 4;
+			if  input_index < self.input.len() as u32{
+				let r: u8 = self.input[input_index as usize];
+				let g: u8 = self.input[input_index as usize + 1];
+				let b: u8 = self.input[input_index as usize + 2];
+				let a: u8 = self.input[input_index as usize + 3];
+				out_pixel.data = [r, g, b, a];
+			}
+			else {
+				out_pixel.data = [0, 0, 0, 0];
+			}
+			out_pixels.push((x, y, out_pixel));
+		}
+
+		//write them to the output buffer
+		for p in out_pixels {
+			out.put_pixel(p.0, p.1, p.2);
+		}
+
+		out
+	}
 }
