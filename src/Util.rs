@@ -33,4 +33,12 @@ pub fn bytes_to_file<'a>(bytes: &[u8], mut file: &'a File) -> &'a File {
 pub fn bytes_to_files(bytes: &[u8]) -> &[&File] {
     //TODO
 }
+
+pub fn file_as_dynamic_image(string: String) -> DynamicImage {
+
+}
+
+pub fn save_image_buffer(img: ImageBuffer) -> File {
+    
+}
 */
