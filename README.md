@@ -1,3 +1,8 @@
+[![Build Status](https://travis-ci.org/teovoinea/steganography.svg?branch=master)](https://travis-ci.org/teovoinea/steganography)
+[![Crates.io](https://img.shields.io/crates/v/steganography.svg)](https://crates.io/crates/steganography)
+[![Crates.io](https://img.shields.io/crates/d/steganography.svg)](https://crates.io/crates/steganography)
+[![Docs.rs](https://docs.rs/steganography/badge.svg)]()
+
 # steganography
 A stable steganography library written in rust
 
@@ -41,7 +46,7 @@ let result = enc.encode_alpha();
 save_image_buffer(result, "hidden_message.png".to_string();
 ```
 
-## Reading a buffer from a file
+## Reading a message from a file
 
 ```rust
 //Load the image with the secret message
