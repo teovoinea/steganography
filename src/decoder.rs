@@ -25,4 +25,18 @@ impl Decoder {
 
 		out
 	}
+
+	/// Decodes the image by reading the bytes from each channel of each pixel
+	pub fn decode_image(&self) -> Vec<u8> {
+		let mut out: Vec<u8> = Vec::new();
+
+		for (_, _, pixel) in self.img.enumerate_pixels() {
+			out.push(pixel.data[0]);
+			out.push(pixel.data[1]);
+			out.push(pixel.data[2]);
+			out.push(pixel.data[3]);
+		}
+
+		out
+	}
 }
