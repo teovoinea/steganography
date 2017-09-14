@@ -50,7 +50,10 @@ impl<'a> Encoder<'a> {
 		//4 bytes per pixel
 		let mut pixels = self.input.len() / 4;
 		let padding = 4 - (self.input.len() % 4);
-		pixels = pixels + padding;
+		//if the length falls on a pixel boundary so no padding needed 
+		if padding != 4 {
+			pixels = pixels + padding;
+		}
 
 		//make it as close to a square as possible
 		let width = (pixels as f64).sqrt().floor() as u32;
