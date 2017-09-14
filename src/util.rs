@@ -1,6 +1,13 @@
 use std::fs::File;
+use std::path::Path;
 use std::io::prelude::*;
 use std::str;
+use image::{
+    DynamicImage,
+    ImageBuffer,
+    Rgba,
+    open
+};
 
 pub fn str_to_bytes<'a>(msg: &'a String) -> &'a [u8] {
     msg.as_bytes()
@@ -30,16 +37,27 @@ pub fn bytes_to_file<'a>(bytes: &[u8], mut file: &'a File) -> &'a File {
     &file
 }
 
+pub fn file_as_dynamic_image(filename: String) -> DynamicImage {
+    let img = open(&Path::new(&filename)).unwrap();
+    img
+}
+
+pub fn file_as_image_buffer(filename: String) -> ImageBuffer<Rgba<u8>, Vec<u8>> {
+    let img = open(&Path::new(&filename)).unwrap();
+    img.to_rgba()
+}
+
+pub fn save_image_buffer(img: ImageBuffer<Rgba<u8>, Vec<u8>>, filename: String) {
+    let out_path = &Path::new(&filename);
+    let _ = img.save(out_path).unwrap();
+}
+
 /*
 pub fn bytes_to_files(bytes: &[u8]) -> &[&File] {
     //TODO
 }
 
-pub fn file_as_dynamic_image(string: String) -> DynamicImage {
-    //TODO
-}
 
-pub fn save_image_buffer(img: ImageBuffer) -> File {
-    //TODO
-}
+
+
 */
