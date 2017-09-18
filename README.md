@@ -70,12 +70,12 @@ println!("{:?}", message);
 ## Running the examples
 ```bash
 cargo build --example example_encode
-cargo run -- example example_encode
+cargo run --example example_encode
 ```
 
 ```bash
 cargo build --example example_decode
-cargo run -- example example_decode
+cargo run --example example_decode
 ```
 
 ## Testing
