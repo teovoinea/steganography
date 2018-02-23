@@ -44,7 +44,7 @@ let enc = Encoder::new(payload, destination_image);
 //Encode our message into the alpha channel of the image
 let result = enc.encode_alpha();
 //Save the new image
-save_image_buffer(result, "hidden_message.png".to_string();
+save_image_buffer(result, "hidden_message.png".to_string());
 ```
 
 ## Reading a message from a file
