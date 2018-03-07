@@ -3,6 +3,7 @@
 [![Crates.io](https://img.shields.io/crates/v/steganography.svg)](https://crates.io/crates/steganography)
 [![Crates.io](https://img.shields.io/crates/d/steganography.svg)](https://crates.io/crates/steganography)
 [![Docs.rs](https://docs.rs/steganography/badge.svg)](https://docs.rs/steganography)
+[![dependency status](https://deps.rs/repo/github/teovoinea/steganography/status.svg)](https://deps.rs/repo/github/teovoinea/steganography)
 
 # steganography
 A stable steganography library written in rust
