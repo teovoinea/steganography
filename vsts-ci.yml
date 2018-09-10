@@ -22,7 +22,7 @@ jobs:
       vmImage: 'vs2017-win2016'
     steps:
     - script: |
-        Invoke-WebRequest -OutFile rustup-init.exe https://win.rustup.rs/
+        powershell -command "& {Invoke-WebRequest -OutFile rustup-init.exe https://win.rustup.rs/}"
         rustup-init -yv --default-toolchain stable --default-host x86_64-pc-windows-msvc
         set PATH=%PATH%;%USERPROFILE%\.cargo\bin
         rustc -vV
