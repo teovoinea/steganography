@@ -12,6 +12,7 @@ steps:
 
 - script: |
     curl https://sh.rustup.rs -sSf | sh -s -- -y
+    source $HOME/.cargo/env
     cargo build
     cargo test -- --test-threads=1
     echo Add other tasks to build, test, and deploy your project.
