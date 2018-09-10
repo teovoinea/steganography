@@ -21,4 +21,11 @@ jobs:
     pool:
       vmImage: 'vs2017-win2016'
     steps:
-    - script: echo hello from Windows
+    - script: |
+        Invoke-WebRequest -OutFile rustup-init.exe https://win.rustup.rs/
+        rustup-init -yv --default-toolchain stable --default-host x86_64-pc-windows-msvc
+        set PATH=%PATH%;%USERPROFILE%\.cargo\bin
+        rustc -vV
+        cargo -vV
+        cargo build
+        cargo test -- --test-threads=1
