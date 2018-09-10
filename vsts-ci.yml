@@ -4,19 +4,19 @@ jobs:
       vmImage: 'ubuntu-16.04'
     steps:
     - script: |
-      curl https://sh.rustup.rs -sSf | sh -s -- -y
-      source $HOME/.cargo/env
-      cargo build
-      cargo test -- --test-threads=1
+        curl https://sh.rustup.rs -sSf | sh -s -- -y
+        source $HOME/.cargo/env
+        cargo build
+        cargo test -- --test-threads=1
   - job: macOS
     pool:
       vmImage: 'xcode9-macos10.13'
     steps:
     - script: |
-      curl https://sh.rustup.rs -sSf | sh -s -- -y
-      source $HOME/.cargo/env
-      cargo build
-      cargo test -- --test-threads=1
+        curl https://sh.rustup.rs -sSf | sh -s -- -y
+        source $HOME/.cargo/env
+        cargo build
+        cargo test -- --test-threads=1
   - job: Windows
     pool:
       vmImage: 'vs2017-win2016'
