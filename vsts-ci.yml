@@ -1,0 +1,31 @@
+jobs:
+  - job: Linux
+    pool:
+      vmImage: 'ubuntu-16.04'
+    steps:
+    - script: |
+        curl https://sh.rustup.rs -sSf | sh -s -- -y
+        source $HOME/.cargo/env
+        cargo build
+        cargo test -- --test-threads=1
+  - job: macOS
+    pool:
+      vmImage: 'xcode9-macos10.13'
+    steps:
+    - script: |
+        curl https://sh.rustup.rs -sSf | sh -s -- -y
+        source $HOME/.cargo/env
+        cargo build
+        cargo test -- --test-threads=1
+  - job: Windows
+    pool:
+      vmImage: 'vs2017-win2016'
+    steps:
+    - script: |
+        powershell -command "& {Invoke-WebRequest -OutFile rustup-init.exe https://win.rustup.rs/}"
+        rustup-init -yv --default-toolchain stable --default-host x86_64-pc-windows-msvc
+        set PATH=%PATH%;%USERPROFILE%\.cargo\bin
+        rustc -vV
+        cargo -vV
+        cargo build
+        cargo test -- --test-threads=1

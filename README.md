@@ -1,3 +1,4 @@
+[![Build Status](https://dev.azure.com/voineateodor/voineateodor/_apis/build/status/teovoinea.steganography)](https://dev.azure.com/voineateodor/voineateodor/_build/latest?definitionId=1)
 [![Build Status](https://travis-ci.org/teovoinea/steganography.svg?branch=master)](https://travis-ci.org/teovoinea/steganography)
 [![Build status](https://ci.appveyor.com/api/projects/status/7u8v5jwu3w5ux23k/branch/master?svg=true)](https://ci.appveyor.com/project/teovoinea/steganography/branch/master)
 [![Crates.io](https://img.shields.io/crates/v/steganography.svg)](https://crates.io/crates/steganography)
