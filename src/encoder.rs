@@ -1,20 +1,20 @@
 use image::{
 	ImageBuffer,
-	GenericImage,
 	DynamicImage,
 	Rgba
 };
 	
 pub struct Encoder<'a> {
-	img: DynamicImage,
+	img: ImageBuffer<Rgba<u8>, Vec<u8>>,
 	input: &'a [u8]
 }
 
 impl<'a> Encoder<'a> {
 	/// Creates a new encoder with a buffer to write and an image to write it to
 	pub fn new(input: &[u8], img: DynamicImage) -> Encoder {
+		let img_as_rgba: ImageBuffer<Rgba<u8>, Vec<u8>> = img.to_rgba();
 		Encoder{
-			img,
+			img: img_as_rgba,
 			input
 		}
 	}
@@ -28,10 +28,10 @@ impl<'a> Encoder<'a> {
 			panic!("Input is too large for image size");
 		}
 
-		let mut out = ImageBuffer::new(width, height);
+		let mut out = ImageBuffer::<Rgba<u8>, Vec<u8>>::new(width, height);
 		
-		for (x, y, pixel) in self.img.pixels() {
-			let mut tmp_pixel = pixel;
+		for (x, y, pixel) in self.img.enumerate_pixels() {
+			let mut tmp_pixel = pixel.clone();
 			
 			let input_index = x + (y * width);
 			
@@ -39,7 +39,7 @@ impl<'a> Encoder<'a> {
 				tmp_pixel.data[3] = self.input[input_index as usize];
 			}
 
-			out.put_pixel(x, y, tmp_pixel);
+			out.put_pixel(x, y, tmp_pixel.clone());
 		}
 
 		return out;
