@@ -11,7 +11,7 @@ categories = ["encoding"]
 license = "MIT"
 
 [dependencies]
-image = "0.21.0"
+image = "0.22.0"
 
 [badges]
 travis-ci = { repository = "teovoinea/steganography" }
