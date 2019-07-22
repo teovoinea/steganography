@@ -20,7 +20,7 @@ impl Decoder {
 		let mut out: Vec<u8> = Vec::new();
 
 		for (_, _, pixel) in self.img.enumerate_pixels() {
-			out.push(pixel.data[3]);
+			out.push(pixel.0[3]);
 		}
 
 		out
@@ -31,10 +31,10 @@ impl Decoder {
 		let mut out: Vec<u8> = Vec::new();
 
 		for (_, _, pixel) in self.img.enumerate_pixels() {
-			out.push(pixel.data[0]);
-			out.push(pixel.data[1]);
-			out.push(pixel.data[2]);
-			out.push(pixel.data[3]);
+			out.push(pixel.0[0]);
+			out.push(pixel.0[1]);
+			out.push(pixel.0[2]);
+			out.push(pixel.0[3]);
 		}
 
 		out
