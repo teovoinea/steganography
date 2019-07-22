@@ -36,7 +36,7 @@ impl<'a> Encoder<'a> {
 			let input_index = x + (y * width);
 			
 			if input_index < self.input.len() as u32{
-				tmp_pixel.data[3] = self.input[input_index as usize];
+				tmp_pixel.0[3] = self.input[input_index as usize];
 			}
 
 			out.put_pixel(x, y, tmp_pixel.clone());
@@ -71,10 +71,10 @@ impl<'a> Encoder<'a> {
 				let g: u8 = self.input[input_index as usize + 1];
 				let b: u8 = self.input[input_index as usize + 2];
 				let a: u8 = self.input[input_index as usize + 3];
-				out_pixel.data = [r, g, b, a];
+				out_pixel.0 = [r, g, b, a];
 			}
 			else {
-				out_pixel.data = [0, 0, 0, 0];
+				out_pixel.0 = [0, 0, 0, 0];
 			}
 			out_pixels.push((x, y, out_pixel));
 		}
